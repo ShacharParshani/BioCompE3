@@ -1,4 +1,4 @@
-from Permutation import Permutation
+from Weights import Weights
 class Generation:
     def __init__(self, n, ):
         self.n = n  # n- size of population
@@ -6,7 +6,7 @@ class Generation:
 
     def create_first_generation(self):
         for i in range(self.n):
-            p = Permutation()
+            p = Weights()
             p.upgrade_fitness()
             self.generation.append(p)
 

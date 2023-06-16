@@ -1,9 +1,8 @@
 import copy
 import random
-import pandas as pd
 
 from Generation import Generation
-from Permutation import Permutation
+from Weights import Weights
 from global_processes import NUM_WEIGHT
 
 import math
@@ -11,11 +10,11 @@ import math
 
 def crossover(p1, p2):
     random_cut = random.choice(range(1, NUM_WEIGHT - 1))
-    new_p = Permutation()
+    new_p = Weights()
     for i in range(random_cut):
-        new_p.permutation[i] = p1.permutation[i]
+        new_p.weights[i] = p1.weights[i]
     for i in range(random_cut,NUM_WEIGHT):
-        new_p.permutation[i] = p2.permutation[i]
+        new_p.weights[i] = p2.weights[i]
     return new_p
 
 
@@ -31,7 +30,7 @@ class Logica:
     def save_solution(self, permutation):
         with open('wnet0.txt', 'w') as file:
             # Iterate over the dictionary items and write them to the file
-            for value in permutation.permutation:
+            for value in permutation.weights:
                 file.write(f"{value}\n")
 
 
@@ -51,8 +50,8 @@ class Logica:
                 max_fitness = 0
                 maxp = None
                 for p in self.current_gen.generation:
-                    print(p.permutation)
-                    print("fitness: ", p.fitness)
+                    # print(p.weights)
+                    # print("fitness: ", p.fitness)
                     fitness = p.fitness
                     if fitness > max_fitness:
                         max_fitness = fitness
@@ -112,9 +111,9 @@ class Logica:
         return newInstance
 
     def mutation(self, p):  # switch one weight
-        random_index = random.uniform(0, NUM_WEIGHT - 1)
+        random_index = random.randint(0, NUM_WEIGHT - 1)
         mut_p = self.replication(p)
-        mut_p.permutation[random_index] = random.uniform(-1, 1)
+        mut_p.weights[random_index] = random.uniform(-1, 1)
         return mut_p
 
 
